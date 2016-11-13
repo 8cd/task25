@@ -23,7 +23,7 @@ def paginate(request, qs):
 	try:
 		page = paginator.page(page)
 	except EmptyPage:
-	page = paginator.page(paginator.num_pages)
+		page = paginator.page(paginator.num_pages)
 	return page, paginator
 
 
@@ -50,7 +50,7 @@ def popular(request):
 	page, paginator = paginate(request, qs)
 	paginator.baseurl = reverse('popular') + '?page='
 
-	return render(request, 'list_rating.html', {
+	return render(request, 'popular.html', {
 		'questions': page.object_list,
 		'page': page,
 		'paginator': paginator,
@@ -60,7 +60,7 @@ def question_detail(request, pk):
 	question = get_object_or_404(Question, id=pk)
 	answers = question.answer_set.all()
 
-	return render(request, 'detail.html', {
+	return render(request, 'question.html', {
 		'question': question,
 		'answers': answers,
 	})
